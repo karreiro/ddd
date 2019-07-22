@@ -1,0 +1,353 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dmn:definitions xmlns:dmn="http://www.omg.org/spec/DMN/20180521/MODEL/" xmlns="https://kiegroup.org/dmn/_19909919-4BAA-4792-B7D1-DF492E682883" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" xmlns:kie="http://www.drools.org/kie/dmn/1.2" xmlns:feel="http://www.omg.org/spec/DMN/20180521/FEEL/" xmlns:dmndi="http://www.omg.org/spec/DMN/20180521/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" id="_8BB470BE-47CF-4981-8A7C-B9C827072A5C" name="room1" expressionLanguage="http://www.omg.org/spec/DMN/20180521/FEEL/" typeLanguage="http://www.omg.org/spec/DMN/20180521/FEEL/" namespace="https://kiegroup.org/dmn/_19909919-4BAA-4792-B7D1-DF492E682883">
+  <dmn:extensionElements/>
+  <dmn:inputData id="_008E7B4D-B34B-476D-9562-39B6BDB03B08" name="item">
+    <dmn:variable id="_157FA5BB-A066-4E46-A537-1C0AC201FF5B" name="item" typeRef="string"/>
+  </dmn:inputData>
+  <dmn:decision id="_F1DE365E-1A77-46E6-BB48-80345FF8408E" name="message">
+    <dmn:variable id="_837046AF-672E-451D-9E07-431D591AF4AC" name="message" typeRef="string"/>
+    <dmn:informationRequirement id="_83C8A15E-E372-40C3-9454-CD316ABCF481">
+      <dmn:requiredInput href="#_7D25269E-5680-4023-96A1-661A38E2AD8A"/>
+    </dmn:informationRequirement>
+    <dmn:informationRequirement id="_D5592A1B-3F85-447C-B001-559F38C169B1">
+      <dmn:requiredInput href="#_79CC95D3-BC4E-44AF-B0FA-63A135B5BDE0"/>
+    </dmn:informationRequirement>
+    <dmn:informationRequirement id="_A1EA9C15-02AB-4637-A9BD-37D6A2E1C75F">
+      <dmn:requiredInput href="#_008E7B4D-B34B-476D-9562-39B6BDB03B08"/>
+    </dmn:informationRequirement>
+    <dmn:decisionTable id="_2B073AF2-3938-4888-A2CE-26BA4C937B36" hitPolicy="FIRST" preferredOrientation="Rule-as-Row">
+      <dmn:input id="_5A901B83-3DAB-4120-9553-3D8DC7CA3208">
+        <dmn:inputExpression id="_4DDF1D6D-851C-4CBE-ACE5-E878503F9DCC" typeRef="string">
+          <dmn:text>action</dmn:text>
+        </dmn:inputExpression>
+      </dmn:input>
+      <dmn:input id="_67C18681-A4CA-4864-A2A8-E1DD78D2D813">
+        <dmn:inputExpression id="_13A56DC9-5EFE-484C-BCD2-BBCB5FE2EFF0" typeRef="string">
+          <dmn:text>item</dmn:text>
+        </dmn:inputExpression>
+      </dmn:input>
+      <dmn:input id="_35639420-689F-476E-8810-60820212B7FE">
+        <dmn:inputExpression id="_A38952C5-71F2-4F67-AAAB-A827C8761FC0" typeRef="string">
+          <dmn:text>target</dmn:text>
+        </dmn:inputExpression>
+      </dmn:input>
+      <dmn:output id="_22BFA4C2-AA02-4246-8AD4-0FBA906327BC" typeRef="string"/>
+      <dmn:rule id="_4D869599-6E82-4A4A-890D-5DD2C2E14F24">
+        <dmn:inputEntry id="_88984A90-4B3D-41F4-9308-F96B1B0B27A8">
+          <dmn:text>"look"</dmn:text>
+        </dmn:inputEntry>
+        <dmn:inputEntry id="_AE55C09F-7F67-4F83-80B4-A8A4C726EF21">
+          <dmn:text>-</dmn:text>
+        </dmn:inputEntry>
+        <dmn:inputEntry id="_0CC63514-7665-4B68-AF1E-FF9E47816629">
+          <dmn:text>"chest"</dmn:text>
+        </dmn:inputEntry>
+        <dmn:outputEntry id="_2F2B49B2-993A-43A4-A391-736E1EF169A8">
+          <dmn:text>"The chest seems old."</dmn:text>
+        </dmn:outputEntry>
+      </dmn:rule>
+      <dmn:rule id="_826AC793-1C07-4792-B8C3-E60928406896">
+        <dmn:inputEntry id="_1B776475-46A9-4C3B-8D7C-FE1397794F55">
+          <dmn:text>"look"</dmn:text>
+        </dmn:inputEntry>
+        <dmn:inputEntry id="_246F9D80-298A-4F24-B868-20E775DA5304">
+          <dmn:text>-</dmn:text>
+        </dmn:inputEntry>
+        <dmn:inputEntry id="_9064E3D1-8C72-4678-801C-44AB98ABFEE3">
+          <dmn:text>"enemy"</dmn:text>
+        </dmn:inputEntry>
+        <dmn:outputEntry id="_F949FC31-F996-4813-A8A3-866A29874F2D">
+          <dmn:text>"There's no enemy in the room"</dmn:text>
+        </dmn:outputEntry>
+      </dmn:rule>
+      <dmn:rule id="_613FE945-D81D-4E35-9E18-ACACD68DD926">
+        <dmn:inputEntry id="_F063A6F5-702F-4272-94C4-C38EBF2471E7">
+          <dmn:text>"look"</dmn:text>
+        </dmn:inputEntry>
+        <dmn:inputEntry id="_AF657182-6841-4764-98F9-E7A393540537">
+          <dmn:text>-</dmn:text>
+        </dmn:inputEntry>
+        <dmn:inputEntry id="_245F4541-1A12-47F8-A24F-8BC33E0B0F71">
+          <dmn:text>"floor"</dmn:text>
+        </dmn:inputEntry>
+        <dmn:outputEntry id="_F6EA885A-6334-4F4A-AD3E-3EB216E2C250">
+          <dmn:text>"The floor is dirty... it smells like trash"</dmn:text>
+        </dmn:outputEntry>
+      </dmn:rule>
+      <dmn:rule id="_FFEB2985-AAFE-44CF-925A-EB67846C14C5">
+        <dmn:inputEntry id="_77962B75-9F85-41DC-814C-11F2CC77C9A3">
+          <dmn:text>"attack"</dmn:text>
+        </dmn:inputEntry>
+        <dmn:inputEntry id="_737C4E2B-3D76-465C-9C4D-BFE3B07C9520">
+          <dmn:text>-</dmn:text>
+        </dmn:inputEntry>
+        <dmn:inputEntry id="_FAA3FE61-6CB4-44D5-9357-15346292903B">
+          <dmn:text>"chest"</dmn:text>
+        </dmn:inputEntry>
+        <dmn:outputEntry id="_1054C03F-1809-4B21-9C50-E8E44D7540E1">
+          <dmn:text>"The chest was destroyed. You found a key!"</dmn:text>
+        </dmn:outputEntry>
+      </dmn:rule>
+      <dmn:rule id="_20F7C9A8-9446-4001-B89D-6E755A0A12C7">
+        <dmn:inputEntry id="_CFF1FDD7-2F4F-4F36-9285-441775D93AA8">
+          <dmn:text>"attack"</dmn:text>
+        </dmn:inputEntry>
+        <dmn:inputEntry id="_AA275B23-0AD7-4324-A9CE-F6DA0805F387">
+          <dmn:text>-</dmn:text>
+        </dmn:inputEntry>
+        <dmn:inputEntry id="_8740CB34-4A31-40A5-89FC-0DBD07DDAEA5">
+          <dmn:text>"enemy"</dmn:text>
+        </dmn:inputEntry>
+        <dmn:outputEntry id="_0E6FA6BC-DE29-4259-9D43-E93B1C88270B">
+          <dmn:text>"There's no enemy in the room"</dmn:text>
+        </dmn:outputEntry>
+      </dmn:rule>
+      <dmn:rule id="_C30B6400-CA26-4B6B-960E-7E10E8A665AE">
+        <dmn:inputEntry id="_25239CFD-4C35-441C-9DD0-23B2FF01661D">
+          <dmn:text>"attack"</dmn:text>
+        </dmn:inputEntry>
+        <dmn:inputEntry id="_31096A3B-F18B-475A-8111-A680F964315E">
+          <dmn:text>-</dmn:text>
+        </dmn:inputEntry>
+        <dmn:inputEntry id="_A951FE1A-A6F0-4628-B2D4-9CE8885BB891">
+          <dmn:text>"floor"</dmn:text>
+        </dmn:inputEntry>
+        <dmn:outputEntry id="_27810CEA-5A33-4486-BF9D-54600505BD37">
+          <dmn:text>"You've attacked the floor.. now your sword is dirty"</dmn:text>
+        </dmn:outputEntry>
+      </dmn:rule>
+      <dmn:rule id="_ABE66592-7A4A-4399-B645-539F40551128">
+        <dmn:inputEntry id="_E080F1ED-62C4-443D-8CC7-9D8AA806B6F1">
+          <dmn:text>"run"</dmn:text>
+        </dmn:inputEntry>
+        <dmn:inputEntry id="_B722BEF8-182B-4E5A-AF97-BACB3446BEC9">
+          <dmn:text>-</dmn:text>
+        </dmn:inputEntry>
+        <dmn:inputEntry id="_9F78B816-FDB6-4005-B4B1-A48CEBFFBF72">
+          <dmn:text>-</dmn:text>
+        </dmn:inputEntry>
+        <dmn:outputEntry id="_5F8E05B5-B78B-4EFF-AB72-762F46E32408">
+          <dmn:text>"You cannot run. All doors are locked."</dmn:text>
+        </dmn:outputEntry>
+      </dmn:rule>
+      <dmn:rule id="_FBBF173D-81A9-4812-8B7C-16E411413B78">
+        <dmn:inputEntry id="_1AF8928F-6319-4E57-81D2-B5C07C1D1EA3">
+          <dmn:text>"use"</dmn:text>
+        </dmn:inputEntry>
+        <dmn:inputEntry id="_4BF8C342-F11A-47A9-9006-311A3D536059">
+          <dmn:text>"key"</dmn:text>
+        </dmn:inputEntry>
+        <dmn:inputEntry id="_B553F517-9816-4232-AF23-17B000583B7C">
+          <dmn:text>-</dmn:text>
+        </dmn:inputEntry>
+        <dmn:outputEntry id="_08A8B5C5-93EF-453D-BC09-3FEC95B85A0B">
+          <dmn:text>"Success. The door was opened!"</dmn:text>
+        </dmn:outputEntry>
+      </dmn:rule>
+      <dmn:rule id="_1F5D0FCF-40A8-4163-8D63-7DA1CCF3189F">
+        <dmn:inputEntry id="_ABB5D29D-9E39-4FB7-A276-C8F9107C888D">
+          <dmn:text>"use"</dmn:text>
+        </dmn:inputEntry>
+        <dmn:inputEntry id="_FF0F62AE-960E-492D-B55D-C51071C2421F">
+          <dmn:text>-</dmn:text>
+        </dmn:inputEntry>
+        <dmn:inputEntry id="_76F5CF07-CD2F-4C73-8DA7-4190645C7331">
+          <dmn:text>-</dmn:text>
+        </dmn:inputEntry>
+        <dmn:outputEntry id="_3E08F6FD-BC6C-47DF-8B69-405154BAE8DF">
+          <dmn:text>"You don't have any key"</dmn:text>
+        </dmn:outputEntry>
+      </dmn:rule>
+      <dmn:rule id="_7B5716D0-637D-4139-BCAB-CC0584341AE2">
+        <dmn:inputEntry id="_14287B23-6DED-4D59-A3B8-1C3350445AD2">
+          <dmn:text>-</dmn:text>
+        </dmn:inputEntry>
+        <dmn:inputEntry id="_BE670CD7-6920-4732-BAA5-269F1B292453">
+          <dmn:text>-</dmn:text>
+        </dmn:inputEntry>
+        <dmn:inputEntry id="_E2EE43D2-2AC1-4A0C-957D-CD489AE8E87A">
+          <dmn:text>-</dmn:text>
+        </dmn:inputEntry>
+        <dmn:outputEntry id="_71C1DAF5-2520-47F1-B743-61CD5F2F472A">
+          <dmn:text>"You're confused. Try another action."</dmn:text>
+        </dmn:outputEntry>
+      </dmn:rule>
+    </dmn:decisionTable>
+  </dmn:decision>
+  <dmn:decision id="_EDA6AFF2-90CE-486E-8625-A3E25CD19FDC" name="obtained item">
+    <dmn:variable id="_52BA6FCD-8E01-42CB-8EC2-8966E1A4098A" name="obtained item" typeRef="string"/>
+    <dmn:informationRequirement id="_B0D8A3B4-ACA2-4F1B-87F3-14300A02D509">
+      <dmn:requiredDecision href="#_F1DE365E-1A77-46E6-BB48-80345FF8408E"/>
+    </dmn:informationRequirement>
+    <dmn:decisionTable id="_9A341A27-F12E-42CD-AA35-C6AA2582DA3A" hitPolicy="FIRST" preferredOrientation="Rule-as-Row">
+      <dmn:input id="_009525EB-7051-4C51-B1AB-55A8A8ED3C81">
+        <dmn:inputExpression id="_4132B043-D15C-420E-A012-58C76E1A95C6" typeRef="string">
+          <dmn:text>message</dmn:text>
+        </dmn:inputExpression>
+      </dmn:input>
+      <dmn:output id="_80B0C2EF-278D-46A0-87A6-92E649C43F0C" typeRef="string"/>
+      <dmn:rule id="_B27DCD3A-6985-4692-B863-E0E66B639414">
+        <dmn:inputEntry id="_C4BB64E5-B163-40AD-8843-BCB353FD355F">
+          <dmn:text>"The chest was destroyed. You found a key!"</dmn:text>
+        </dmn:inputEntry>
+        <dmn:outputEntry id="_0ABC133B-3624-4996-94F2-A7C882E0D2AC">
+          <dmn:text>"key"</dmn:text>
+        </dmn:outputEntry>
+      </dmn:rule>
+      <dmn:rule id="_8542CA32-94D6-4CA9-8BCB-69D56318A69E">
+        <dmn:inputEntry id="_2CD60518-04A2-45C5-9D17-09D20591858B">
+          <dmn:text>-</dmn:text>
+        </dmn:inputEntry>
+        <dmn:outputEntry id="_1A1B3B92-A345-435E-A709-6A5062D4958D">
+          <dmn:text>""</dmn:text>
+        </dmn:outputEntry>
+      </dmn:rule>
+    </dmn:decisionTable>
+  </dmn:decision>
+  <dmn:inputData id="_7D25269E-5680-4023-96A1-661A38E2AD8A" name="target">
+    <dmn:variable id="_137872F2-981C-4BD7-B10F-47408E81D7B4" name="target" typeRef="string"/>
+  </dmn:inputData>
+  <dmn:inputData id="_79CC95D3-BC4E-44AF-B0FA-63A135B5BDE0" name="action">
+    <dmn:variable id="_156570BD-686E-461B-9782-FB9EC21EFD80" name="action" typeRef="string"/>
+  </dmn:inputData>
+  <dmn:decision id="_FD25923F-278D-44EB-BF44-DC67057CD5D6" name="model">
+    <dmn:variable id="_8FC87A19-C1AF-4687-95E9-F896DD5AE131" name="model"/>
+    <dmn:informationRequirement id="_511C7434-16C3-43F7-897F-98C8CCD4BEC3">
+      <dmn:requiredDecision href="#_F1DE365E-1A77-46E6-BB48-80345FF8408E"/>
+    </dmn:informationRequirement>
+    <dmn:decisionTable id="_EAFD9539-9092-40F7-A860-CA8C1872859B" hitPolicy="FIRST" preferredOrientation="Rule-as-Row">
+      <dmn:input id="_5D32135A-4CC5-4185-854B-E77F7CC6330D">
+        <dmn:inputExpression id="_5A77B5EB-E49C-4FD4-ACF6-A23C98106540" typeRef="string">
+          <dmn:text>message</dmn:text>
+        </dmn:inputExpression>
+      </dmn:input>
+      <dmn:output id="_D8636CD1-712D-4D91-9632-4DD0F6815599" name="modelName" typeRef="string"/>
+      <dmn:output id="_95194DBF-FED3-4E33-8F37-FA25221B7C68" name="modelNamespace" typeRef="string"/>
+      <dmn:rule id="_FFB07E43-1A8A-4577-A22C-EF0B527FD3B3">
+        <dmn:inputEntry id="_81E126F6-673F-4B60-BAF4-D409DFD958D2">
+          <dmn:text>"Success. The door was opened!"</dmn:text>
+        </dmn:inputEntry>
+        <dmn:outputEntry id="_0123E0D2-1015-478B-AF4B-B94FAFCFA10F">
+          <dmn:text>"room2"</dmn:text>
+        </dmn:outputEntry>
+        <dmn:outputEntry id="_BAB4C836-9150-4DE9-84AD-367750021CFC">
+          <dmn:text>"https://kiegroup.org/dmn/_9809DB65-7156-4326-A3DB-F703A3ED778E"</dmn:text>
+        </dmn:outputEntry>
+      </dmn:rule>
+      <dmn:rule id="_287A7349-2C18-4225-96AD-D875699F1607">
+        <dmn:inputEntry id="_064674DC-4496-4EC0-AD3E-D19E635D154B">
+          <dmn:text>-</dmn:text>
+        </dmn:inputEntry>
+        <dmn:outputEntry id="_1CEBD9E8-13A1-4795-A3EC-FE97F6CDB411">
+          <dmn:text>"room1"</dmn:text>
+        </dmn:outputEntry>
+        <dmn:outputEntry id="_EC5849EF-8776-4167-BFB9-B0846EDACEE4">
+          <dmn:text>"https://kiegroup.org/dmn/_19909919-4BAA-4792-B7D1-DF492E682883"</dmn:text>
+        </dmn:outputEntry>
+      </dmn:rule>
+    </dmn:decisionTable>
+  </dmn:decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <di:extension>
+        <kie:ComponentsWidthsExtension>
+          <kie:ComponentWidths dmnElementRef="_2B073AF2-3938-4888-A2CE-26BA4C937B36">
+            <kie:width>50.0</kie:width>
+            <kie:width>100.0</kie:width>
+            <kie:width>100.0</kie:width>
+            <kie:width>100.0</kie:width>
+            <kie:width>494.0</kie:width>
+            <kie:width>100.0</kie:width>
+          </kie:ComponentWidths>
+          <kie:ComponentWidths dmnElementRef="_9A341A27-F12E-42CD-AA35-C6AA2582DA3A">
+            <kie:width>50.0</kie:width>
+            <kie:width>401.0</kie:width>
+            <kie:width>190.0</kie:width>
+            <kie:width>100.0</kie:width>
+          </kie:ComponentWidths>
+          <kie:ComponentWidths dmnElementRef="_EAFD9539-9092-40F7-A860-CA8C1872859B">
+            <kie:width>50.0</kie:width>
+            <kie:width>365.0</kie:width>
+            <kie:width>212.0</kie:width>
+            <kie:width>571.0</kie:width>
+            <kie:width>100.0</kie:width>
+          </kie:ComponentWidths>
+        </kie:ComponentsWidthsExtension>
+      </di:extension>
+      <dmndi:DMNShape id="dmnshape-_F1DE365E-1A77-46E6-BB48-80345FF8408E" dmnElementRef="_F1DE365E-1A77-46E6-BB48-80345FF8408E" isCollapsed="false">
+        <dmndi:DMNStyle>
+          <dmndi:FillColor red="255" green="255" blue="255"/>
+          <dmndi:StrokeColor red="0" green="0" blue="0"/>
+          <dmndi:FontColor red="0" green="0" blue="0"/>
+        </dmndi:DMNStyle>
+        <dc:Bounds x="263" y="332" width="100" height="50"/>
+        <dmndi:DMNLabel/>
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="dmnshape-_008E7B4D-B34B-476D-9562-39B6BDB03B08" dmnElementRef="_008E7B4D-B34B-476D-9562-39B6BDB03B08" isCollapsed="false">
+        <dmndi:DMNStyle>
+          <dmndi:FillColor red="255" green="255" blue="255"/>
+          <dmndi:StrokeColor red="0" green="0" blue="0"/>
+          <dmndi:FontColor red="0" green="0" blue="0"/>
+        </dmndi:DMNStyle>
+        <dc:Bounds x="40" y="331.3421052631579" width="100" height="50"/>
+        <dmndi:DMNLabel/>
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="dmnshape-_EDA6AFF2-90CE-486E-8625-A3E25CD19FDC" dmnElementRef="_EDA6AFF2-90CE-486E-8625-A3E25CD19FDC" isCollapsed="false">
+        <dmndi:DMNStyle>
+          <dmndi:FillColor red="255" green="255" blue="255"/>
+          <dmndi:StrokeColor red="0" green="0" blue="0"/>
+          <dmndi:FontColor red="0" green="0" blue="0"/>
+        </dmndi:DMNStyle>
+        <dc:Bounds x="596" y="190" width="100" height="50"/>
+        <dmndi:DMNLabel/>
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="dmnshape-_7D25269E-5680-4023-96A1-661A38E2AD8A" dmnElementRef="_7D25269E-5680-4023-96A1-661A38E2AD8A" isCollapsed="false">
+        <dmndi:DMNStyle>
+          <dmndi:FillColor red="255" green="255" blue="255"/>
+          <dmndi:StrokeColor red="0" green="0" blue="0"/>
+          <dmndi:FontColor red="0" green="0" blue="0"/>
+        </dmndi:DMNStyle>
+        <dc:Bounds x="262" y="474" width="100" height="50"/>
+        <dmndi:DMNLabel/>
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="dmnshape-_79CC95D3-BC4E-44AF-B0FA-63A135B5BDE0" dmnElementRef="_79CC95D3-BC4E-44AF-B0FA-63A135B5BDE0" isCollapsed="false">
+        <dmndi:DMNStyle>
+          <dmndi:FillColor red="255" green="255" blue="255"/>
+          <dmndi:StrokeColor red="0" green="0" blue="0"/>
+          <dmndi:FontColor red="0" green="0" blue="0"/>
+        </dmndi:DMNStyle>
+        <dc:Bounds x="262" y="189" width="100" height="50"/>
+        <dmndi:DMNLabel/>
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="dmnshape-_FD25923F-278D-44EB-BF44-DC67057CD5D6" dmnElementRef="_FD25923F-278D-44EB-BF44-DC67057CD5D6" isCollapsed="false">
+        <dmndi:DMNStyle>
+          <dmndi:FillColor red="255" green="255" blue="255"/>
+          <dmndi:StrokeColor red="0" green="0" blue="0"/>
+          <dmndi:FontColor red="0" green="0" blue="0"/>
+        </dmndi:DMNStyle>
+        <dc:Bounds x="596" y="332" width="100" height="50"/>
+        <dmndi:DMNLabel/>
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="dmnedge-_83C8A15E-E372-40C3-9454-CD316ABCF481" dmnElementRef="_83C8A15E-E372-40C3-9454-CD316ABCF481">
+        <di:waypoint x="312" y="474"/>
+        <di:waypoint x="313" y="382"/>
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="dmnedge-_D5592A1B-3F85-447C-B001-559F38C169B1" dmnElementRef="_D5592A1B-3F85-447C-B001-559F38C169B1">
+        <di:waypoint x="312" y="189"/>
+        <di:waypoint x="313" y="332"/>
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="dmnedge-_A1EA9C15-02AB-4637-A9BD-37D6A2E1C75F" dmnElementRef="_A1EA9C15-02AB-4637-A9BD-37D6A2E1C75F">
+        <di:waypoint x="140" y="356.3421052631579"/>
+        <di:waypoint x="263" y="357"/>
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="dmnedge-_B0D8A3B4-ACA2-4F1B-87F3-14300A02D509" dmnElementRef="_B0D8A3B4-ACA2-4F1B-87F3-14300A02D509">
+        <di:waypoint x="313" y="332"/>
+        <di:waypoint x="646" y="240"/>
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="dmnedge-_511C7434-16C3-43F7-897F-98C8CCD4BEC3" dmnElementRef="_511C7434-16C3-43F7-897F-98C8CCD4BEC3">
+        <di:waypoint x="363" y="357"/>
+        <di:waypoint x="596" y="357"/>
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</dmn:definitions>

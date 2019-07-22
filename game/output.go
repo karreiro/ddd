@@ -37,7 +37,7 @@ func (output *SystemOutput) IsPrinting() bool {
 
 func (output *SystemOutput) updateFormattedText() {
 
-	interval := 3
+	interval := 1
 	output.counter++
 
 	if output.counter == interval {

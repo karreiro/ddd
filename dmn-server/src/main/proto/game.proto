@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "org.kie.grpc";
+option java_outer_classname = "GameEngineProto";
+option objc_class_prefix = "GEP";
+
+package proto;
+
+service GameEngine {
+    rpc process (GameInput) returns (GameOutput) {
+    }
+}
+
+message GameInput {
+   string action = 1;
+   string item  = 2;
+   string target = 3;
+   int32 enemyHp = 4;
+   int32 heroHp = 5;
+   int32 interactions = 6;
+   bool isHeroTurn = 7;
+}
+
+message GameOutput {
+    string message = 1;
+    string newItem = 2;
+    string modelName = 3;
+    string modelNamespace = 4;
+    int32 newEnemyHp = 5;
+    int32 newHeroHp = 6;
+}
