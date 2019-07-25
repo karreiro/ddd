@@ -1,2 +1,4 @@
-protoc -I proto/ proto/game.proto --go_out=plugins=grpc:proto
-mvn exec:java -Dexec.mainClass=org.kie.grpc.KieGrpcServer
+# DMN Dungeon Demo
+
+## Demo
+![Demo](https://github.com/karreiro/ddd/raw/master/docs/demo.gif)

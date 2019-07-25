@@ -38,13 +38,13 @@ func dial() *grpc.ClientConn {
 }
 
 func process(input *proto.GameInput) *proto.GameOutput {
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 1000*time.Second)
 	result, err := gameClient.Process(ctx, input)
 
 	defer cancel()
 
 	if err != nil {
-		log.Fatal("Error during the DMN call...")
+		log.Fatal("Error during the DMN call...", err)
 	}
 	return result
 }

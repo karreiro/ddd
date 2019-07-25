@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	_ "image/jpeg"
 	_ "image/png"
 	"os"
@@ -19,40 +20,34 @@ import (
 const (
 	initialModeName      = "room1"
 	initialModeNamespace = "https://kiegroup.org/dmn/_19909919-4BAA-4792-B7D1-DF492E682883"
-	initialText          = `Welcome.
-This experience is plain text adventure.
-You are a warrior.
-You can LOOK at things.
-You can ATACK anything with your sword.
-You can OPEN a chest.
-During this adventure you will learn new skills. Be careful.`
+	initialText          = "Welcome.\nThis experience is a plain text adventure. Type something..."
 )
 
 var (
-	user             = game.UserInput{}
-	system           = game.SystemOutput{}
-	pendingAction    = func() {}
-	hasPendingAction bool
-	modelName        string
-	modelNamespace   string
-	monster          bool
-	backgroundImage  *ebiten.Image
-	userItem         string
-	userName         string
-	tableItem        string
+	user            = game.UserInput{}
+	system          = game.SystemOutput{}
+	modelName       string
+	modelNamespace  string
+	backgroundImage *ebiten.Image
+	item            string
+	enemyHp         int32
+	heroHp          int32
+	interactions    int32
 )
 
 func init() {
 	backgroundImage = readImage("background.jpg")
 	modelName = initialModeName
 	modelNamespace = initialModeNamespace
+	enemyHp = 10
+	heroHp = 10
 }
 
 func main() {
 	system.SetText(initialText)
 
 	// ebiten.SetFullscreen(true)
-	if err := ebiten.Run(update, 430, 240, 3, "DMN Dungeon Demo"); err != nil {
+	if err := ebiten.Run(update, 550, 240, 3, "DMN Dungeon Demo"); err != nil {
 		log.Fatal(err)
 	}
 }
@@ -63,6 +58,7 @@ func update(screen *ebiten.Image) error {
 	system.Update()
 
 	handleMainAction()
+
 	if ebiten.IsDrawingSkipped() {
 		return nil
 	}
@@ -70,13 +66,30 @@ func update(screen *ebiten.Image) error {
 	showBackground(screen)
 	printUserText(screen)
 	printSystemText(screen)
+	printHeroHP(screen)
+	printEnemyHP(screen)
 
 	return nil
+}
+
+func printHeroHP(screen *ebiten.Image) {
+	heroHpText := fmt.Sprintf("Hero HP: %d", heroHp)
+	ebitenutil.DebugPrintAt(screen, heroHpText, 5, 5)
+}
+
+func printEnemyHP(screen *ebiten.Image) {
+	// TODO: this logic must exist into the DMN file.
+	if interactions >= 5 && modelName == "room1" {
+		enemyHpText := fmt.Sprintf("Enemy HP: %d", enemyHp)
+		ebitenutil.DebugPrintAt(screen, enemyHpText, 5, 20)
+	}
 }
 
 func handleMainAction() {
 
 	if isEnterPressed() {
+
+		interactions++
 
 		userInput := getUserInput()
 
@@ -87,92 +100,45 @@ func handleMainAction() {
 		output := client.Evaluate(&proto.GameInput{
 			Action:         getAction(userInput),
 			Target:         getTarget(userInput),
-			Item:           userItem,
+			Item:           item,
 			ModelName:      modelName,
 			ModelNamespace: modelNamespace,
+			Interactions:   interactions,
+			IsHeroTurn:     interactions%2 == 0,
+			EnemyHp:        enemyHp,
+			HeroHp:         heroHp,
 		})
+
 		modelName = output.ModelName
 		modelNamespace = output.ModelNamespace
+		item = output.NewItem
+		enemyHp = output.NewEnemyHp
+		heroHp = output.NewHeroHp
 
-		if hasNewItem(output) {
-			handleNewItem(output)
-		} else {
-			system.SetText(output.Message)
-		}
+		system.SetText(output.Message)
 
-		user.Clear()
-	}
-}
-
-func handlePendingAction() {
-	userInput := getUserInput()
-	if isEnterPressed() {
-		if strings.Contains(userInput, "ye") {
-			pendingAction()
-		} else {
-			system.SetText("OK.")
-		}
 		user.Clear()
 	}
 }
 
 func getAction(input string) string {
-	if strings.Contains(input, "look") {
-		return "look"
+	actions := []string{"attack", "check", "look", "explore", "use"}
+	for _, actions := range actions {
+		if strings.Contains(input, actions) {
+			return actions
+		}
 	}
-	if strings.Contains(input, "attack") {
-		return "attack"
-	}
-	if strings.Contains(input, "run") {
-		return "run"
-	}
-	if strings.Contains(input, "use") {
-		return "use"
-	}
-	return input
+	return ""
 }
 
 func getTarget(input string) string {
-	if strings.Contains(input, "chest") {
-		return "chest"
-	}
-	if strings.Contains(input, "enemy") {
-		return "enemy"
-	}
-	if strings.Contains(input, "floor") {
-		return "floor"
-	}
-	if strings.Contains(input, "key") {
-		return userItem
-	}
-	return input
-}
-
-func hasNewItem(output *proto.GameOutput) bool {
-	return len(output.GetItem()) > 0
-}
-
-func handleNewItem(output *proto.GameOutput) {
-
-	message := output.Message
-	tableItem = output.GetItem()
-
-	if len(tableItem) > 0 {
-		if len(userItem) > 0 {
-			message += "\nYou are holding a " + userItem + "."
-			message += "\nDo you wan to leave it and take the " + tableItem + "? (Yes/No)"
-			hasPendingAction = true
-			pendingAction = func() {
-				userItem = tableItem
-				hasPendingAction = false
-				system.SetText("Ok. Now you have the " + userItem + ". What are you going to do?")
-			}
-		} else {
-			userItem = tableItem
+	targets := []string{"room", "chest", "doll", "picture", "papers"}
+	for _, target := range targets {
+		if strings.Contains(input, target) {
+			return target
 		}
 	}
-
-	system.SetText(message)
+	return ""
 }
 
 func printUserText(screen *ebiten.Image) {

@@ -17,6 +17,7 @@
 package org.kie.grpc;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
@@ -109,23 +110,30 @@ public class KieGrpcServer {
             final DMNRuntime runtime = createRuntime(input.getModelName() + ".dmn");
             final DMNModel dmnModel = runtime.getModel(input.getModelNamespace(), input.getModelName());
 
-            final DMNResult dmnResult = runtime.evaluateAll(dmnModel, makeDMNContext(input));
-            final GameOutput build = makeOutput(dmnResult.getContext().getAll());
+            final DMNContext dmnContext = makeDMNContext(input);
+            final DMNResult dmnResult = runtime.evaluateAll(dmnModel, dmnContext);
+            final GameOutput output = makeOutput(dmnResult.getContext().getAll());
 
-            responseObserver.onNext(build);
+            responseObserver.onNext(output);
             responseObserver.onCompleted();
         }
     }
 
     private static GameOutput makeOutput(final Map<String, Object> map) {
-        final String message = getMessage(map);
-        final String item = getItem(map);
-        final String modelName = getModelName(map);
-        final String modelNamespace = getModelNamespace(map);
+
+        final String message = getStringValue(map, "message");
+        final String item = getStringValue(map, "newItem");
+        final int newEnemyHp = getIntValue(map, "combat.newEnemyHp");
+        final int newHeroHp = getIntValue(map, "combat.newHeroHp");
+        final String modelName = getStringValue(map, "model.modelName");
+        final String modelNamespace = getStringValue(map, "model.modelNamespace");
+
         return GameOutput
                 .newBuilder()
                 .setMessage(message)
-                .setItem(item)
+                .setNewItem(item)
+                .setNewEnemyHp(newEnemyHp)
+                .setNewHeroHp(newHeroHp)
                 .setModelName(modelName)
                 .setModelNamespace(modelNamespace)
                 .build();
@@ -136,34 +144,41 @@ public class KieGrpcServer {
         context.set("target", input.getTarget());
         context.set("item", input.getItem());
         context.set("action", input.getAction());
+        context.set("enemy hp", input.getEnemyHp());
+        context.set("hero hp", input.getHeroHp());
+        context.set("is hero turn?", input.getIsHeroTurn());
+        context.set("interactions", input.getInteractions());
         return context;
-    }
-
-    private static String getMessage(final Map<String, Object> map) {
-        return getStringValue(map, "message");
-    }
-
-    private static String getItem(final Map<String, Object> map) {
-        return getStringValue(map, "obtained item");
-    }
-
-    private static String getModelName(final Map<?, ?> map) {
-        return getModel(map).map(m -> getStringValue(m, "modelName")).orElse("");
-    }
-
-    private static String getModelNamespace(final Map<?, ?> map) {
-        return getModel(map).map(m -> getStringValue(m, "modelNamespace")).orElse("");
-    }
-
-    private static Optional<Map<?, ?>> getModel(final Map<?, ?> map) {
-        return Optional.ofNullable(map.get("model")).map(e -> (Map<?, ?>) e);
     }
 
     private static String getStringValue(final Map<?, ?> map,
                                          final String key) {
-        return Optional
-                .ofNullable(map.get(key))
-                .map(v -> (String) v)
-                .orElse("");
+        return getValue(map, key, "", String.class);
+    }
+
+    private static int getIntValue(final Map<?, ?> map,
+                                   final String key) {
+        return getValue(map, key, new BigDecimal(0), BigDecimal.class).intValue();
+    }
+
+    private static <T> T getValue(final Map<?, ?> map,
+                                  final String key,
+                                  final T defaultValue,
+                                  final Class<T> klass) {
+
+        if (!key.contains(".")) {
+            return Optional
+                    .ofNullable(map.get(key))
+                    .map(klass::cast)
+                    .orElse(defaultValue);
+        } else {
+
+            final int firstIndex = key.indexOf(".");
+            final String currentKey = key.substring(0, firstIndex);
+            final String remainingKeys = key.substring(firstIndex + 1);
+            final Map<?, ?> newMap = (Map<?, ?>) map.get(currentKey);
+
+            return getValue(newMap, remainingKeys, defaultValue, klass);
+        }
     }
 }
